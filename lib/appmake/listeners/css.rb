@@ -3,15 +3,19 @@ require "listen"
 module Appmake
 	module Listeners
 		class Css
-			def self.listen(bg = true)
+			def self.listen(block = true)
 				callback = Proc.new do |modified, added, removed|
-					puts "=> rebuilding CSS"
-					system("bundle exec sass css/app.scss css/app.css")
+					self.compile()
 				end
 
 				listener = Listen.to "css", :filter => /\.scss$/
 				listener.change(&callback)
-				listener.start(bg)
+				listener.start(block)
+			end
+
+			def self.compile
+				puts "=> rebuilding CSS"
+				system("bundle exec sass css/app.scss css/app.css")
 			end
 		end
 	end

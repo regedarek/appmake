@@ -30,13 +30,17 @@ module Appmake
 
 			empty_directory "public"
 			template "templates/public/index.html.tt", "public/index.html"
+
+			Listeners::Css.compile
+			Listeners::Js.compile
+			Listeners::Tpl.compile
 		end
 
 		desc "watch", "watch for files to compile"
 		def watch
 			Listeners::Css.listen(false)
 			Listeners::Js.listen(false)
-			Listeners::Tpl.listen()
+			Listeners::Tpl.listen(true)
 		end
 	end
 end
