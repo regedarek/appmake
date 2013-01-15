@@ -17,7 +17,7 @@ module Appmake
 
 			def self.compile
 				Basic.new.say_status :compile, "CSS"
-				system("dot-module -d tpl/ -o js/templates.js")
+				system("npm run-script tpl")
 			end
 		end
 	end

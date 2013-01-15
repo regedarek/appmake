@@ -17,7 +17,7 @@ module Appmake
 
 			def self.compile
 				Basic.new.say_status :compile, "JS"
-				system("webmake js/app.js public/app.js")
+				system("npm run-script build")
 			end
 		end
 	end

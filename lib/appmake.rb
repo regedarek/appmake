@@ -15,6 +15,8 @@ module Appmake
 		desc "init", "initialize new application"
 		def init
 			template "templates/package.json.tt", "package.json"
+			template "templates/README.md.tt", "README.md"
+			system "npm install"
 
 			empty_directory "css"
 			template "templates/css/app.scss.tt", "css/app.scss"
@@ -29,7 +31,6 @@ module Appmake
 			empty_directory "public"
 			template "templates/public/index.html.tt", "public/index.html"
 
-			system "npm install"
 
 			Listeners::Css.compile
 			Listeners::Tpl.compile
