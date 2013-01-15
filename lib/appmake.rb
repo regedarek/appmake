@@ -1,5 +1,6 @@
 require "thor"
 require "appmake/version"
+require "appmake/listeners/js"
 
 module Appmake
   class Appmake < Thor
