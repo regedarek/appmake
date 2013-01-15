@@ -29,6 +29,8 @@ module Appmake
 			empty_directory "public"
 			template "templates/public/index.html.tt", "public/index.html"
 
+			system "npm install"
+
 			Listeners::Css.compile
 			Listeners::Tpl.compile
 			Listeners::Js.compile
