@@ -5,7 +5,7 @@ module Appmake
 		class Js
 			def initialize
 				listener = Listen.to "js", :filter => /\.js$/
-				listener.change(callback)
+				listener.change(&callback)
 				listener
 			end
 
