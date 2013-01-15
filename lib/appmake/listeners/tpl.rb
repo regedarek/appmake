@@ -2,14 +2,14 @@ require "listen"
 
 module Appmake
 	module Listeners
-		class Js
+		class Tpl
 			def self.listen(bg = true)
 				callback = Proc.new do |modified, added, removed|
-					puts "=> rebuilding JS"
-					system("node bin/compile_templates.js")
+					puts "=> rebuilding TPL"
+					system("node js/compile_templates.js")
 				end
 
-				listener = Listen.to "js", :filter => /\.js$/
+				listener = Listen.to "tpl", :filter => /\.html$/
 				listener.change(&callback)
 				listener.start(bg)
 			end

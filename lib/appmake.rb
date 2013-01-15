@@ -1,6 +1,8 @@
 require "thor"
 require "appmake/version"
+require "appmake/listeners/css"
 require "appmake/listeners/js"
+require "appmake/listeners/tpl"
 
 module Appmake
   class Appmake < Thor
@@ -32,7 +34,9 @@ module Appmake
 
 		desc "watch", "watch for files to compile"
 		def watch
+			Listeners::Css.listen(false)
 			Listeners::Js.listen(false)
+			Listeners::Tpl.listen()
 		end
 	end
 end
