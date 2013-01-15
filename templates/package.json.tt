@@ -9,7 +9,7 @@
     },
     "scripts": {
         "tpl": "dot-module -d tpl/ -o js/templates.js",
-        "build": "webmake js/app.js public/app.js --sourcemap"
+        "build": "webmake js/app.js public/app.js --sourcemap",
         "deploy": "webmake js/app.js public/app.js"
     },
     "engines": { "node": "*" }
