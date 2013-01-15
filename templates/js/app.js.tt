@@ -1,0 +1,4 @@
+(function() {
+	var templates = require("./templates");
+	document.write(templates.welcome({title: "Appmake", description: "Welcome in Appmake example app"}));
+}())

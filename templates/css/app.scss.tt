@@ -1,0 +1,6 @@
+@import "body";
+
+body {
+	color: $bodyColor;
+	background-color: $bodyBackgroundColor;
+}

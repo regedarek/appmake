@@ -2,4 +2,4 @@
 
 require "appmake"
 
-Appmake::Appmake.foo
+Appmake::Appmake.start
