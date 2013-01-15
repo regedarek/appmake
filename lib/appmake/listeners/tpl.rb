@@ -15,7 +15,7 @@ module Appmake
 
 			def self.compile
 				puts "=> rebuilding TPL"
-				system("node js/compile_templates.js")
+				system("node bin/compile_templates.js")
 			end
 		end
 	end
