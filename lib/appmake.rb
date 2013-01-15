@@ -1,5 +1,9 @@
 require "appmake/version"
 
 module Appmake
-  # Your code goes here...
+  class Appmake
+  	def self.foo
+  		puts "foo"
+  	end
+  end
 end

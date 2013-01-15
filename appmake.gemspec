@@ -8,12 +8,17 @@ Gem::Specification.new do |gem|
   gem.version       = Appmake::VERSION
   gem.authors       = ["Sebastian Sito"]
   gem.email         = ["sebastian@hypenode.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{Appmake allows you to easily develop single-page apps in HTML5}
+  gem.summary       = %q{Appmake app bootstrapper}
+  gem.homepage      = "https://github.com/sebastiansito/appmake"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
+
+  gem.add_dependency "thor"
+  gem.add_dependency "listen"
+  gem.add_dependency "rb-fsevent"
+  gem.add_dependency "sass"
 end
