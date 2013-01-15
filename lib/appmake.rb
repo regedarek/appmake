@@ -14,14 +14,14 @@ module Appmake
 
 		desc "init", "initialize new application"
 		def init
-			system("npm install")
+			template "templates/package.json.tt", "package.json"
 
 			empty_directory "css"
-			template"templates/css/app.scss.tt", "css/app.scss"
-			template"templates/css/body.scss.tt", "css/body.scss"
+			template "templates/css/app.scss.tt", "css/app.scss"
+			template "templates/css/body.scss.tt", "css/body.scss"
 
 			empty_directory "js"
-			template"templates/js/app.js.tt", "js/app.js"
+			template "templates/js/app.js.tt", "js/app.js"
 
 			empty_directory "tpl"
 			template "templates/tpl/welcome.html.tt", "tpl/welcome.html"
