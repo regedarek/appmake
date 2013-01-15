@@ -15,7 +15,7 @@ module Appmake
 
 			def self.compile
 				puts "=> rebuilding JS"
-				system("node bin/compile_templates.js")
+				system("webmake js/app.js public/app.js")
 			end
 		end
 	end

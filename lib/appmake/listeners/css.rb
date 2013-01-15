@@ -15,7 +15,7 @@ module Appmake
 
 			def self.compile
 				puts "=> rebuilding CSS"
-				system("bundle exec sass css/app.scss css/app.css")
+				system("bundle exec sass css/app.scss public/app.css")
 			end
 		end
 	end
