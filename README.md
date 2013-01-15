@@ -1,6 +1,6 @@
 # Appmake
 
-TODO: Write a gem description
+Single page apps made easy!
 
 ## Installation
 
