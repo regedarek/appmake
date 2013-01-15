@@ -4,21 +4,22 @@ TODO: Write a gem description
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Create app directory.
 
-    gem 'appmake'
+	mkdir myapp
+	cd myapp
 
-And then execute:
+Create `Gemfile` with following content
 
-    $ bundle
+	source :rubygems
 
-Or install it yourself as:
+	gem "appmake"
 
-    $ gem install appmake
+Run `bundle install`
 
 ## Usage
 
-TODO: Write usage instructions here
+Run `bundle exec appmake init` to bootstrap app directory structure. Next issue `bundle exec appmake watch` to start automatic compillation of source files.
 
 ## Contributing
 
