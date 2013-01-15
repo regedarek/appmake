@@ -32,8 +32,7 @@ module Appmake
 
 		desc "watch", "watch for files to compile"
 		def watch
-			js_listener = Listeners::Js.new
-			js_listener.start
+			Listeners::Js.listen(false)
 		end
 	end
 end
