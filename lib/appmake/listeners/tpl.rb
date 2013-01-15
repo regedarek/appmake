@@ -3,6 +3,8 @@ require "listen"
 module Appmake
 	module Listeners
 		class Tpl
+			include Thor::Shell
+
 			def self.listen(block = true)
 				callback = Proc.new do |modified, added, removed|
 					self.compile()
@@ -14,8 +16,8 @@ module Appmake
 			end
 
 			def self.compile
-				puts "=> rebuilding TPL"
-				system("node bin/compile_templates.js")
+				Basic.new.say_status :compile, "CSS"
+				system("node bin/compile_templates.js &> /dev/null")
 			end
 		end
 	end

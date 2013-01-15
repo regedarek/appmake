@@ -17,9 +17,7 @@ module Appmake
 			end
 
 			def self.compile
-				puts "=> rebuilding CSS"
-				sh = Basic.new
-				sh.say_status :compile, "CSS"
+				Basic.new.say_status :compile, "CSS"
 				system("bundle exec sass css/app.scss public/app.css")
 			end
 		end
