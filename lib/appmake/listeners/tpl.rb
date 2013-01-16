@@ -16,7 +16,7 @@ module Appmake
 			end
 
 			def self.compile
-				Basic.new.say_status :compile, "CSS"
+				Basic.new.say_status :compile, "TPL"
 				system("npm run-script tpl")
 			end
 		end
