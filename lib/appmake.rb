@@ -23,8 +23,6 @@ module Appmake
 			template "templates/css/App.scss.tt", "css/App.scss"
 			template "templates/css/body.scss.tt", "css/body.scss"
 
-			empty_directory "coffee"
-
 			empty_directory "js"
 			template "templates/js/App.js.tt", "js/App.js"
 
