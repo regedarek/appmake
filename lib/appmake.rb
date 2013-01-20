@@ -4,7 +4,10 @@ require "appmake/listeners/css"
 require "appmake/listeners/coffee"
 require "appmake/listeners/js"
 require "appmake/listeners/tpl"
+require "appmake/installers/backbone"
+require "appmake/installers/bootstrap"
 require "appmake/installers/jquery"
+require "appmake/installers/underscore"
 
 module Appmake
   class Appmake < Thor
