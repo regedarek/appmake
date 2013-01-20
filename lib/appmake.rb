@@ -17,7 +17,6 @@ module Appmake
 		def init
 			template "templates/package.json.tt", "package.json"
 			template "templates/README.md.tt", "README.md"
-			system "npm install"
 
 			empty_directory "css"
 			template "templates/css/App.scss.tt", "css/App.scss"
@@ -25,6 +24,8 @@ module Appmake
 
 			empty_directory "js"
 			template "templates/js/App.js.tt", "js/App.js"
+
+			empty_directory "coffee"
 
 			empty_directory "tpl"
 			template "templates/tpl/welcome.html.tt", "tpl/welcome.html"
@@ -34,6 +35,8 @@ module Appmake
 			empty_directory "public/js"
 			empty_directory "public/img"
 			template "templates/public/index.html.tt", "public/index.html"
+
+			system "npm install"
 
 			Listeners::Css.compile
 			Listeners::Coffee.compile

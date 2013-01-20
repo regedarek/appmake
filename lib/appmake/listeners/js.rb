@@ -16,13 +16,16 @@ module Appmake
 			end
 
 			def self.compile
-				Basic.new.say_status :compile, "JS"
+				shell = Color.new
+
+				shell.say_status :compile, "JavaScript", :green
 				
 				Dir.glob "js/*.js" do |f|
 					name = f.split("/").last
 
 					if name[0] == name[0].upcase
-						system "webmake js/#{name} public/js/#{name}"
+						shell.say_status :cmd, "webmake js/#{name} public/js/#{name}", :blue
+						system "webmake js/#{name} public/js/#{name} > /dev/null"
 					end
 				end
 			end

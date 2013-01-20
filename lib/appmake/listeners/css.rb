@@ -17,14 +17,17 @@ module Appmake
 			end
 
 			def self.compile
-				Basic.new.say_status :compile, "CSS"
+				shell = Color.new
+
+				shell.say_status :compile, "CSS", :green
 				
 				Dir.glob "css/*" do |f|
 					name = f.split("/").last
 
 					if name[0] == name[0].upcase
 						new_name = name.gsub "scss", "css"
-						system "bundle exec sass css/#{name} public/css/#{new_name}"
+						shell.say_status :cmd, "bundle exec sass css/#{name} public/css/#{new_name}", :blue
+						system "bundle exec sass css/#{name} public/css/#{new_name} > /dev/null"
 					end
 				end
 			end

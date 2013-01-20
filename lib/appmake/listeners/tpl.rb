@@ -16,8 +16,12 @@ module Appmake
 			end
 
 			def self.compile
-				Basic.new.say_status :compile, "TPL"
-				system("npm run-script tpl")
+				shell = Color.new
+				
+				shell.say_status :compile, "Templates", :green
+				
+				shell.say_status :cmd, "./node_modules/.bin/dot-module -d tpl/ -o js/templates.js", :blue
+				system("./node_modules/.bin/dot-module -d tpl/ -o js/templates.js > /dev/null")
 			end
 		end
 	end
