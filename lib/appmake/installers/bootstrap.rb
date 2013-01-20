@@ -8,7 +8,7 @@ module Appmake
 			def self.install
 				shell = Color.new
 
-				shell.say_status :install "Bootstrap", :green
+				shell.say_status :install, "Bootstrap", :green
 				shell.say_status :cmd, "curl http://twitter.github.com/bootstrap/assets/bootstrap.zip -o public/bootstrap.zip", :blue
 				shell.say_status :cmd, "cd public", :blue
 				shell.say_status :cmd, "unzip bootstrap.zip &> /dev/null", :blue
