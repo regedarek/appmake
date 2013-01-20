@@ -5,7 +5,8 @@
     "preferGlobal": "true",
     "dependencies": {
         "webmake": ">= 0.3.14",
-        "dot-module": ">= 0.0.1"
+        "dot-module": ">= 0.0.1",
+        "coffee-script": ">= 1.4.0"
     },
     "scripts": {
         "tpl": "dot-module -d tpl/ -o js/templates.js",

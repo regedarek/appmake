@@ -1,6 +1,7 @@
 require "thor"
 require "appmake/version"
 require "appmake/listeners/css"
+require "appmake/listeners/coffee"
 require "appmake/listeners/js"
 require "appmake/listeners/tpl"
 
@@ -22,6 +23,8 @@ module Appmake
 			template "templates/css/App.scss.tt", "css/App.scss"
 			template "templates/css/body.scss.tt", "css/body.scss"
 
+			empty_directory "coffee"
+
 			empty_directory "js"
 			template "templates/js/App.js.tt", "js/App.js"
 
@@ -40,6 +43,7 @@ module Appmake
 		desc "watch", "watch for files to compile"
 		def watch
 			Listeners::Css.listen(false)
+			Listeners::Coffee.listen(false)
 			Listeners::Tpl.listen(false)
 			Listeners::Js.listen(true)
 		end
