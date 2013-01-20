@@ -6,7 +6,7 @@ require 'appmake/version'
 Gem::Specification.new do |gem|
   gem.name          = "appmake"
   gem.version       = Appmake::VERSION
-  gem.authors       = ["Sebastian Sito"]
+  gem.authors       = ["Sebastian Sito", "Sławomir Kołodziej"]
   gem.email         = ["sebastian@hypenode.com"]
   gem.description   = %q{Appmake allows you to easily develop single-page apps in HTML5}
   gem.summary       = %q{Appmake app bootstrapper}

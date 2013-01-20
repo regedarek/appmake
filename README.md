@@ -28,3 +28,7 @@ Run `bundle exec appmake init` to bootstrap app directory structure. Next issue 
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Authors
+
+**appmake** is being developed by Sebastian Sito and Sławomir Kołodziej
