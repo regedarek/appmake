@@ -38,10 +38,6 @@ module Appmake
 			empty_directory "js"
 			template "templates/js/App.js.tt", "js/App.js"
 
-			if options.coffee
-				empty_directory "coffee"
-			end
-
 			empty_directory "tpl"
 			template "templates/tpl/welcome.html.tt", "tpl/welcome.html"
 
@@ -54,8 +50,28 @@ module Appmake
 			shell.say_status :cmd, "npm install", :blue
 			system "npm install &> /dev/null"
 
+			if options.coffee
+				empty_directory "coffee"
+				Listeners::Coffee.compile
+			end
+
+			if options.jquery
+				Installers::Jquery.install
+			end
+
+			if options.underscore
+				Installers::Jquery.install
+			end
+
+			if options.backbone
+				Installers::Backbone.install
+			end
+
+			if options.bootstrap
+				Installers::Bootstrap.install
+			end
+
 			Listeners::Css.compile
-			Listeners::Coffee.compile
 			Listeners::Tpl.compile
 			Listeners::Js.compile
 		end
@@ -75,21 +91,11 @@ module Appmake
 			if name == "jquery"
 				Installers::Jquery.install
 			elsif name == "underscore"
-				shell.say_status :cmd, "curl http://underscorejs.org/underscore-min.js -o public/underscore.min.js", :blue
-				system("curl -silent http://underscorejs.org/underscore-min.js -o public/underscore.min.js")
+				Installers::Underscore.install
 			elsif name == "backbone"
-				shell.say_status :cmd, "curl http://backbonejs.org/backbonejs-min.js -o public/backbone.min.js", :blue
-				system("curl -silent http://backbonejs.org/backbone-min.js -o public/backbone.min.js")
+				Installers::Backbone.install
 			elsif name == "bootstrap"
-				shell.say_status :cmd, "curl http://twitter.github.com/bootstrap/assets/bootstrap.zip -o public/bootstrap.zip", :blue
-				shell.say_status :cmd, "cd public", :blue
-				shell.say_status :cmd, "unzip bootstrap.zip &> /dev/null", :blue
-				shell.say_status :cmd, "mv bootstrap/js/bootstrap.min.js js/", :blue
-				shell.say_status :cmd, "mv bootstrap/css/bootstrap.min.css css/", :blue
-				shell.say_status :cmd, "mv bootstrap/css/bootstrap-responsive.min.css css/", :blue
-				shell.say_status :cmd, "mv bootstrap/img/* img/", :blue
-				shell.say_status :cmd, "rm -rf bootstrap && rm bootstrap.zip", :blue
-				system("curl -silent http://twitter.github.com/bootstrap/assets/bootstrap.zip -o public/bootstrap.zip && cd public && unzip bootstrap.zip &> /dev/null && mv bootstrap/js/bootstrap.min.js js/ && mv bootstrap/css/bootstrap.min.css css/ && mv bootstrap/css/bootstrap-responsive.min.css css/ && mv bootstrap/img/* img/ && rm -rf bootstrap && rm bootstrap.zip")
+				Installers::Bootstrap.install
 			else
 				abort "error: unsupported install: #{name}"
 			end
