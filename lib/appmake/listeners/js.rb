@@ -17,7 +17,14 @@ module Appmake
 
 			def self.compile
 				Basic.new.say_status :compile, "JS"
-				system("npm run-script build")
+				
+				Dir.glob "js/*" do |f|
+					name = f.split("/").last
+
+					if name[0] == name[0].upcase
+						system "webmake js/#{name} public/#{name}"
+					end
+				end
 			end
 		end
 	end
