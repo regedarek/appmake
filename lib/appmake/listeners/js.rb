@@ -22,7 +22,7 @@ module Appmake
 					name = f.split("/").last
 
 					if name[0] == name[0].upcase
-						system "webmake js/#{name} public/#{name}"
+						system "webmake js/#{name} public/js/#{name}"
 					end
 				end
 			end

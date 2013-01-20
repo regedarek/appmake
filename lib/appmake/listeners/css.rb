@@ -24,7 +24,7 @@ module Appmake
 
 					if name[0] == name[0].upcase
 						new_name = name.gsub "scss", "css"
-						system "bundle exec sass css/#{name} public/#{new_name}"
+						system "bundle exec sass css/#{name} public/css/#{new_name}"
 					end
 				end
 			end
