@@ -15,6 +15,8 @@ module Appmake
 
 		desc "init", "initialize new application"
 		def init
+			shell = Color.new
+
 			template "templates/package.json.tt", "package.json"
 			template "templates/README.md.tt", "README.md"
 
@@ -36,7 +38,8 @@ module Appmake
 			empty_directory "public/img"
 			template "templates/public/index.html.tt", "public/index.html"
 
-			system "npm install"
+			shell.say_status :cmd, "npm install", :blue
+			system "npm install &> /dev/null"
 
 			Listeners::Css.compile
 			Listeners::Coffee.compile
@@ -54,14 +57,20 @@ module Appmake
 
 		desc "install", "install various libs"
 		def install(name)
+			shell = Color.new
+
 			if name == "jquery"
-				system("curl http://code.jquery.com/jquery-1.9.0.min.js -o public/jquery-1.9.0.min.js")
+				shell.say_status :cmd, "curl http://code.jquery.com/jquery-1.9.0.min.js -o public/jquery-1.9.0.min.js", :blue
+				system("curl -silent http://code.jquery.com/jquery-1.9.0.min.js -o public/jquery-1.9.0.min.js")
 			elsif name == "underscore"
-				system("curl http://underscorejs.org/underscore-min.js -o public/underscore.min.js")
+				shell.say_status :cmd, "curl http://underscorejs.org/underscore-min.js -o public/underscore.min.js", :blue
+				system("curl -silent http://underscorejs.org/underscore-min.js -o public/underscore.min.js")
 			elsif name == "backbone"
-				system("curl http://backbonejs.org/backbonejs-min.js -o public/backbone.min.js")
+				shell.say_status :cmd, "curl http://backbonejs.org/backbonejs-min.js -o public/backbone.min.js", :blue
+				system("curl -silent http://backbonejs.org/backbonejs-min.js -o public/backbone.min.js")
 			elsif name == "bootstrap"
-				system("curl http://twitter.github.com/bootstrap/assets/bootstrap.zip -o public/bootstrap.zip && cd public && unzip bootstrap.zip && mv bootstrap/js/bootstrap.min.js js/ && mv bootstrap/css/bootstrap.min.css css/ && mv bootstrap/css/bootstrap-responsive.min.css css/ && mv bootstrap/img/* img/ && rm -rf bootstrap && rm bootstrap.zip")
+				shell.say_status :cmd, "curl http://twitter.github.com/bootstrap/assets/bootstrap.zip -o public/bootstrap.zip && cd public && unzip bootstrap.zip && mv bootstrap/js/bootstrap.min.js js/ && mv bootstrap/css/bootstrap.min.css css/ && mv bootstrap/css/bootstrap-responsive.min.css css/ && mv bootstrap/img/* img/ && rm -rf bootstrap && rm bootstrap.zip", :blue
+				system("curl -silent http://twitter.github.com/bootstrap/assets/bootstrap.zip -o public/bootstrap.zip && cd public && unzip bootstrap.zip && mv bootstrap/js/bootstrap.min.js js/ && mv bootstrap/css/bootstrap.min.css css/ && mv bootstrap/css/bootstrap-responsive.min.css css/ && mv bootstrap/img/* img/ && rm -rf bootstrap && rm bootstrap.zip")
 			else
 				abort "error: unsupported install: #{name}"
 			end
