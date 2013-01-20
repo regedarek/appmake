@@ -35,6 +35,7 @@ module Appmake
 			template "templates/public/index.html.tt", "public/index.html"
 
 			Listeners::Css.compile
+			Listeners::Coffee.compile
 			Listeners::Tpl.compile
 			Listeners::Js.compile
 		end

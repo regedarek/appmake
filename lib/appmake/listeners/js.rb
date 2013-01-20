@@ -18,7 +18,7 @@ module Appmake
 			def self.compile
 				Basic.new.say_status :compile, "JS"
 				
-				Dir.glob "js/*" do |f|
+				Dir.glob "js/*.js" do |f|
 					name = f.split("/").last
 
 					if name[0] == name[0].upcase
