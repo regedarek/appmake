@@ -4,6 +4,7 @@ require "appmake/listeners/css"
 require "appmake/listeners/coffee"
 require "appmake/listeners/js"
 require "appmake/listeners/tpl"
+require "appmake/installers/jquery"
 
 module Appmake
   class Appmake < Thor
@@ -14,6 +15,16 @@ module Appmake
 		end
 
 		desc "init", "initialize new application"
+		{
+			:coffee => false,
+			:jquery => true,
+			:underscore => false,
+			:backbone => false,
+			:bootstrap => false
+		}.each do |op, default|
+			method_option op, :type => :boolean, :default => default, :aliases => op.to_s
+		end
+
 		def init
 			shell = Color.new
 
@@ -27,7 +38,9 @@ module Appmake
 			empty_directory "js"
 			template "templates/js/App.js.tt", "js/App.js"
 
-			empty_directory "coffee"
+			if options.coffee
+				empty_directory "coffee"
+			end
 
 			empty_directory "tpl"
 			template "templates/tpl/welcome.html.tt", "tpl/welcome.html"
@@ -60,17 +73,23 @@ module Appmake
 			shell = Color.new
 
 			if name == "jquery"
-				shell.say_status :cmd, "curl http://code.jquery.com/jquery-1.9.0.min.js -o public/jquery-1.9.0.min.js", :blue
-				system("curl -silent http://code.jquery.com/jquery-1.9.0.min.js -o public/jquery-1.9.0.min.js")
+				Installers::Jquery.install
 			elsif name == "underscore"
 				shell.say_status :cmd, "curl http://underscorejs.org/underscore-min.js -o public/underscore.min.js", :blue
 				system("curl -silent http://underscorejs.org/underscore-min.js -o public/underscore.min.js")
 			elsif name == "backbone"
 				shell.say_status :cmd, "curl http://backbonejs.org/backbonejs-min.js -o public/backbone.min.js", :blue
-				system("curl -silent http://backbonejs.org/backbonejs-min.js -o public/backbone.min.js")
+				system("curl -silent http://backbonejs.org/backbone-min.js -o public/backbone.min.js")
 			elsif name == "bootstrap"
-				shell.say_status :cmd, "curl http://twitter.github.com/bootstrap/assets/bootstrap.zip -o public/bootstrap.zip && cd public && unzip bootstrap.zip && mv bootstrap/js/bootstrap.min.js js/ && mv bootstrap/css/bootstrap.min.css css/ && mv bootstrap/css/bootstrap-responsive.min.css css/ && mv bootstrap/img/* img/ && rm -rf bootstrap && rm bootstrap.zip", :blue
-				system("curl -silent http://twitter.github.com/bootstrap/assets/bootstrap.zip -o public/bootstrap.zip && cd public && unzip bootstrap.zip && mv bootstrap/js/bootstrap.min.js js/ && mv bootstrap/css/bootstrap.min.css css/ && mv bootstrap/css/bootstrap-responsive.min.css css/ && mv bootstrap/img/* img/ && rm -rf bootstrap && rm bootstrap.zip")
+				shell.say_status :cmd, "curl http://twitter.github.com/bootstrap/assets/bootstrap.zip -o public/bootstrap.zip", :blue
+				shell.say_status :cmd, "cd public", :blue
+				shell.say_status :cmd, "unzip bootstrap.zip &> /dev/null", :blue
+				shell.say_status :cmd, "mv bootstrap/js/bootstrap.min.js js/", :blue
+				shell.say_status :cmd, "mv bootstrap/css/bootstrap.min.css css/", :blue
+				shell.say_status :cmd, "mv bootstrap/css/bootstrap-responsive.min.css css/", :blue
+				shell.say_status :cmd, "mv bootstrap/img/* img/", :blue
+				shell.say_status :cmd, "rm -rf bootstrap && rm bootstrap.zip", :blue
+				system("curl -silent http://twitter.github.com/bootstrap/assets/bootstrap.zip -o public/bootstrap.zip && cd public && unzip bootstrap.zip &> /dev/null && mv bootstrap/js/bootstrap.min.js js/ && mv bootstrap/css/bootstrap.min.css css/ && mv bootstrap/css/bootstrap-responsive.min.css css/ && mv bootstrap/img/* img/ && rm -rf bootstrap && rm bootstrap.zip")
 			else
 				abort "error: unsupported install: #{name}"
 			end
