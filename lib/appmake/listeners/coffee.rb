@@ -22,9 +22,11 @@ module Appmake
 					name = f.split("/").last
 					new_name = name.gsub "coffee", "js"
 
+					puts "=== ./node_modules/.bin/coffee -c js/#{name} js/#{new_name}"
 					system "./node_modules/.bin/coffee -c js/#{name} js/#{new_name}"
 
 					if name[0] == name[0].upcase
+						puts "=== ./node_modules/.bin/webmake js/#{new_name} public/js/#{new_name}"
 						system "./node_modules/.bin/webmake js/#{new_name} public/js/#{new_name}"
 					end
 				end
