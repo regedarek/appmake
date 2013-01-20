@@ -56,7 +56,7 @@ module Appmake
 			elsif name == "underscore"
 				system("curl http://underscorejs.org/underscore-min.js -o public/underscore.min.js")
 			elsif name == "backbone"
-				system("curl http://backbonejs.org/backbonejs-min.js -o public/backbonejs.min.js")
+				system("curl http://backbonejs.org/backbonejs-min.js -o public/backbone.min.js")
 			elsif name == "bootstrap"
 				system("curl http://twitter.github.com/bootstrap/assets/bootstrap.zip -o public/bootstrap.zip && cd public && unzip bootstrap.zip && mv bootstrap/js/bootstrap.min.js js/ && mv bootstrap/css/bootstrap.min.css css/ && mv bootstrap/css/bootstrap-responsive.min.css css/ && mv bootstrap/img/* img/ && rm -rf bootstrap && rm bootstrap.zip")
 			else
