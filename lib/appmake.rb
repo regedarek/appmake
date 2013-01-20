@@ -32,8 +32,9 @@ module Appmake
 			template "templates/tpl/welcome.html.tt", "tpl/welcome.html"
 
 			empty_directory "public"
+			empty_directory "public/css"
+			empty_directory "public/js"
 			template "templates/public/index.html.tt", "public/index.html"
-
 
 			Listeners::Css.compile
 			Listeners::Tpl.compile
