@@ -32,6 +32,7 @@ module Appmake
 			empty_directory "public"
 			empty_directory "public/css"
 			empty_directory "public/js"
+			empty_directory "public/img"
 			template "templates/public/index.html.tt", "public/index.html"
 
 			Listeners::Css.compile
@@ -46,6 +47,21 @@ module Appmake
 			Listeners::Coffee.listen(false)
 			Listeners::Tpl.listen(false)
 			Listeners::Js.listen(true)
+		end
+
+		desc "install", "install various libs"
+		def install(name, version)
+			if name == "jquery"
+				system("curl http://code.jquery.com/jquery-#{version}.min.js -o public/jquery-#{version}.min.js")
+			elsif name == "underscore"
+				system("curl http://underscorejs.org/underscore-min.js -o public/underscore.min.js")
+			elsif name == "backbone"
+				system("curl http://backbonejs.org/backbonejs-min.js -o public/backbonejs.min.js")
+			elsif name == "bootstrap"
+				system("curl http://twitter.github.com/bootstrap/assets/bootstrap.zip -o public/bootstrap.zip && cd public && unzip bootstrap.zip && mv bootstrap/js/bootstrap.min.js js/ && mv bootstrap/css/bootstrap.min.css css/ && mv bootstrap/css/bootstrap-responsive.min.css css/ && mv bootstrap/img/* img/ && rm -rf bootstrap && rm bootstrap.zip")
+			else
+				abort "error: unsupported install: #{name}"
+			end
 		end
 	end
 end
