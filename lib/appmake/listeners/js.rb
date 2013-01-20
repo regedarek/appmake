@@ -24,8 +24,8 @@ module Appmake
 					name = f.split("/").last
 
 					if name[0] == name[0].upcase
-						shell.say_status :cmd, "webmake js/#{name} public/js/#{name}", :blue
-						system "webmake js/#{name} public/js/#{name} > /dev/null"
+						shell.say_status :cmd, "./node_modules/.bin/webmake js/#{name} public/js/#{name}", :blue
+						system "./node_modules/.bin/webmake js/#{name} public/js/#{name} > /dev/null"
 					end
 				end
 			end
