@@ -3,7 +3,7 @@ require "thor"
 module Appmake
 	module Installers
 		class Jquery
-			include Thor::Actions
+			include Thor::Shell
 
 			def self.install
 				shell = Color.new
