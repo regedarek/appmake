@@ -50,9 +50,9 @@ module Appmake
 		end
 
 		desc "install", "install various libs"
-		def install(name, version)
+		def install(name)
 			if name == "jquery"
-				system("curl http://code.jquery.com/jquery-#{version}.min.js -o public/jquery-#{version}.min.js")
+				system("curl http://code.jquery.com/jquery-1.9.0.min.js -o public/jquery-1.9.0.min.js")
 			elsif name == "underscore"
 				system("curl http://underscorejs.org/underscore-min.js -o public/underscore.min.js")
 			elsif name == "backbone"
