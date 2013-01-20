@@ -19,11 +19,11 @@ module Appmake
 			system "npm install"
 
 			empty_directory "css"
-			template "templates/css/app.scss.tt", "css/app.scss"
+			template "templates/css/App.scss.tt", "css/App.scss"
 			template "templates/css/body.scss.tt", "css/body.scss"
 
 			empty_directory "js"
-			template "templates/js/app.js.tt", "js/app.js"
+			template "templates/js/App.js.tt", "js/App.js"
 
 			empty_directory "tpl"
 			template "templates/tpl/welcome.html.tt", "tpl/welcome.html"
