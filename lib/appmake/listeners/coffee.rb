@@ -10,7 +10,7 @@ module Appmake
 					self.compile()
 				end
 
-				listener = Listen.to "coffee", :filter => /\.coffee$/
+				listener = Listen.to "js", :filter => /\.coffee$/
 				listener.change(&callback)
 				listener.start(block)
 			end
