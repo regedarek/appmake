@@ -25,7 +25,7 @@ module Appmake
 			:backbone => false,
 			:bootstrap => false
 		}.each do |op, default|
-			method_option op, :type => :boolean, :default => default, :aliases => op.to_s
+			method_option op, :type => :boolean, :default => default
 		end
 
 		def init
