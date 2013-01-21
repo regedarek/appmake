@@ -20,7 +20,7 @@ module Appmake
 		desc "init", "initialize new application"
 		{
 			:coffee => false,
-			:jquery => true,
+			:jquery => false,
 			:underscore => false,
 			:backbone => false,
 			:bootstrap => false
@@ -63,7 +63,7 @@ module Appmake
 			end
 
 			if options.underscore
-				Installers::Jquery.install
+				Installers::Underscore.install
 			end
 
 			if options.backbone
@@ -92,12 +92,22 @@ module Appmake
 			shell = Color.new
 
 			if name == "jquery"
+				empty_directory "public"
+				empty_directory "public/js"
 				Installers::Jquery.install
 			elsif name == "underscore"
+				empty_directory "public"
+				empty_directory "public/js"
 				Installers::Underscore.install
 			elsif name == "backbone"
+				empty_directory "public"
+				empty_directory "public/js"
 				Installers::Backbone.install
 			elsif name == "bootstrap"
+				empty_directory "public"
+				empty_directory "public/css"
+				empty_directory "public/img"
+				empty_directory "public/js"
 				Installers::Bootstrap.install
 			else
 				abort "error: unsupported install: #{name}"
