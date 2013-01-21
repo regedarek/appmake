@@ -1,36 +1,22 @@
 require "thor"
+require "listen"
 require "appmake/version"
-require "appmake/listeners/css"
-require "appmake/listeners/coffee"
-require "appmake/listeners/js"
-require "appmake/listeners/tpl"
-require "appmake/installers/backbone"
-require "appmake/installers/bootstrap"
-require "appmake/installers/jquery"
-require "appmake/installers/underscore"
 
 module Appmake
-  class Appmake < Thor
+	class Appmake < Thor
 		include Thor::Actions
 
 		def self.source_root
 			File.dirname(File.dirname(__FILE__))
 		end
 
-		desc "init", "initialize new application"
-		{
-			:coffee => false,
-			:jquery => false,
-			:underscore => false,
-			:backbone => false,
-			:bootstrap => false
-		}.each do |op, default|
-			method_option op, :type => :boolean, :default => default
-		end
-
+		desc "init", "initialize new app"
+		method_option :coffee, :type => :boolean, :default => false
+		method_option :jquery, :type => :boolean, :default => false
+		method_option :underscore, :type => :boolean, :default => false
+		method_option :backbone, :type => :boolean, :default => false
+		method_option :bootstrap, :type => :boolean, :default => false
 		def init
-			shell = Color.new
-
 			template "templates/package.json.tt", "package.json"
 			template "templates/README.md.tt", "README.md"
 
@@ -45,72 +31,132 @@ module Appmake
 			template "templates/tpl/welcome.html.tt", "tpl/welcome.html"
 
 			empty_directory "public"
+			template "templates/public/index.html.tt", "public/index.html"
+
 			empty_directory "public/css"
 			empty_directory "public/js"
 			empty_directory "public/img"
-			template "templates/public/index.html.tt", "public/index.html"
 
-			shell.say_status :cmd, "npm install", :blue
-			system "npm install &> /dev/null"
-
-			if options.coffee
+			if options.coffee?
 				empty_directory "coffee"
-				Listeners::Coffee.compile
 			end
 
-			if options.jquery
-				Installers::Jquery.install
+			if options.jquery?
+				install "jquery"
 			end
 
-			if options.underscore
-				Installers::Underscore.install
+			if options.underscore?
+				install "underscore"
 			end
 
-			if options.backbone
-				Installers::Backbone.install
+			if options.backbone?
+				install "backbone"
 			end
 
-			if options.bootstrap
-				Installers::Bootstrap.install
+			if options.bootstrap?
+				install "bootstrap"
 			end
 
-			Listeners::Css.compile
-			Listeners::Tpl.compile
-			Listeners::Js.compile
+			run "npm install"
+
+			compile "css"
+			compile "tpl"
+			compile "coffee"
+			compile "js"
+		end
+
+		desc "compile", "compile files"
+		method_option :name, :type => :string
+		def compile(name)
+			if name == "css"
+				Dir.glob "css/*.scss" do |f|
+					name = f.split("/").last
+					if name[0] == name[0].upcase
+						new_name = name.gsub "scss", "css"
+						run "bundle exec sass css/#{name} public/css/#{new_name}"
+					end
+				end
+			elsif name == "js"
+				Dir.glob "js/*.js" do |f|
+					name = f.split("/").last
+					if name[0] == name[0].upcase
+						run "./node_modules/.bin/webmake js/#{name} public/js/#{name}"
+					end
+				end
+			elsif name == "tpl"
+				run "./node_modules/.bin/dot-module -d tpl/ -o js/templates.js"
+			elsif name == "coffee"
+				Dir.glob "coffee/*.coffee" do |f|
+					name = f.split("/").last
+					new_name = name.gsub "coffee", "js"
+					run "./node_modules/.bin/coffee -c coffee/#{name}"
+					run "mv coffee/#{new_name} js/#{new_name}"
+					if name[0] == name[0].upcase
+						run "./node_modules/.bin/webmake js/#{new_name} public/js/#{new_name}"
+					end
+				end
+			end
 		end
 
 		desc "watch", "watch for files to compile"
 		def watch
-			Listeners::Css.listen(false)
-			Listeners::Coffee.listen(false)
-			Listeners::Tpl.listen(false)
-			Listeners::Js.listen(true)
+			css = Listen.to "css", :filter => /\.scss$/
+			css.change do
+				compile "css"
+			end
+			css.start(false)
+
+			if Dir.exists? "coffee"
+				coffee = Listen.to "coffee", :filter => /\.coffee$/
+				coffee.change do
+					compile "coffee"
+				end
+				coffee.start(false)
+			end
+
+			tpl = Listen.to "tpl", :filter => /\.html$/
+			tpl.change do
+				compile "tpl"
+			end
+			tpl.start(false)
+
+			js = Listen.to "js", :filter => /\.js$/
+			js.change do
+				compile "js"
+			end
+			js.start(true)
 		end
 
-		desc "install", "install various libs"
+		desc "install", "install lib"
+		method_option :name, :type => :string
 		def install(name)
-			shell = Color.new
-
 			if name == "jquery"
 				empty_directory "public"
 				empty_directory "public/js"
-				Installers::Jquery.install
+				run "curl http://code.jquery.com/jquery-1.9.0.min.js -o public/js/jquery.min.js"
 			elsif name == "underscore"
 				empty_directory "public"
 				empty_directory "public/js"
-				Installers::Underscore.install
+				run "curl http://underscorejs.org/underscore-min.js -o public/underscore.min.js"
 			elsif name == "backbone"
 				empty_directory "public"
 				empty_directory "public/js"
-				Installers::Backbone.install
+				run "curl -silent http://backbonejs.org/backbone-min.js -o public/backbone.min.js"
 			elsif name == "bootstrap"
 				empty_directory "public"
 				empty_directory "public/css"
 				empty_directory "public/img"
 				empty_directory "public/js"
-				Installers::Bootstrap.install
+				run "curl -silent http://twitter.github.com/bootstrap/assets/bootstrap.zip -o public/bootstrap.zip"
+				run "unzip public/bootstrap.zip -d public"
+				run "mv public/bootstrap/js/bootstrap.min.js public/js/"
+				run "mv public/bootstrap/css/bootstrap.min.css public/css/"
+				run "mv public/bootstrap/css/bootstrap-responsive.min.css public/css/"
+				run "mv public/bootstrap/img/* public/img/"
+				run "rm -rf public/bootstrap"
+				run "rm public/bootstrap.zip"
 			else
-				abort "error: unsupported install: #{name}"
+				abort "error: cannot install #{name}"
 			end
 		end
 	end
