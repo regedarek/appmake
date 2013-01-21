@@ -86,13 +86,19 @@ module Appmake
 			elsif name == "tpl"
 				run "./node_modules/.bin/dot-module -d tpl/ -o js/templates.js"
 			elsif name == "coffee"
-				Dir.glob "coffee/*.coffee" do |f|
-					name = f.split("/").last
-					new_name = name.gsub "coffee", "js"
-					run "./node_modules/.bin/coffee -c coffee/#{name}"
-					run "mv coffee/#{new_name} js/#{new_name}"
-					if name[0] == name[0].upcase
-						run "./node_modules/.bin/webmake js/#{new_name} public/js/#{new_name}"
+				Dir.glob(File.join("**", "coffee", "**", "*.coffee")) do |f|
+					run "./node_modules/.bin/coffee -c #{f}"
+					coffee_dir = f.gsub(f.split("/").last, "")
+					js_dir = coffee_dir.gsub "coffee", "js"
+					empty_directory js_dir
+					js_file = f.gsub "coffee", "js"
+					run "mv #{f.gsub('.coffee', '.js')} #{js_file}"
+
+					Dir.glob "js/*.js" do |js|
+						name = js.split("/").last
+						if name[0] == name[0].upcase
+							run "./node_modules/.bin/webmake #{js} public/js/#{name}"
+						end
 					end
 				end
 			end
