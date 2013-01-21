@@ -7,10 +7,10 @@
 		<link rel="stylesheet" type="text/css" href="css/App.css">
 	</head>
 	<body>
-		<% if options.jquery %><script type="text/javascript" src="js/jquery.min.js"></script><% end %>
-		<% if options.underscore %><script type="text/javascript" src="js/underscore.min.js"></script><% end %>
-		<% if options.backbone %><script type="text/javascript" src="js/backbone.min.js"></script><% end %>
-		<% if options.bootstrap %><script type="text/javascript" src="js/bootstrap.min.js"></script><% end %>
+		<% if options.jquery? %><script type="text/javascript" src="js/jquery.min.js"></script><% end %>
+		<% if options.underscore? %><script type="text/javascript" src="js/underscore.min.js"></script><% end %>
+		<% if options.backbone? %><script type="text/javascript" src="js/backbone.min.js"></script><% end %>
+		<% if options.bootstrap? %><script type="text/javascript" src="js/bootstrap.min.js"></script><% end %>
 		<script type="text/javascript" src="js/App.js"></script>
 	</body>
 </html>
