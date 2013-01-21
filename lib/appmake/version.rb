@@ -1,3 +1,3 @@
 module Appmake
-  VERSION = "0.1.30"
+  VERSION = "0.2"
 end
